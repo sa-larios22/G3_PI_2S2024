@@ -1,0 +1,16 @@
+{
+  "name": "googleforms",
+  "version": "1.0.0",
+  "description": "GoogleForms API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fernando-Ibarra",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/local-auth": "^3.0.1",
+    "@googleapis/docs": "^3.0.2",
+    "googleapis": "^140.0.1"
+  }
+}
