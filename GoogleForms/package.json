@@ -11,6 +11,9 @@
   "dependencies": {
     "@google-cloud/local-auth": "^3.0.1",
     "@googleapis/docs": "^3.0.2",
-    "googleapis": "^140.0.1"
+    "colors": "^1.4.0",
+    "googleapis": "^140.0.1",
+    "inquirer": "^10.1.6",
+    "read-excel-file": "^5.8.4"
   }
 }
