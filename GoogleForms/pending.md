@@ -1,8 +1,4 @@
 ### Por hacer
-2. Pasar excel a json
-3. Actualizar form creado
-4. Forma de compartir el form
-5. Obtener respuesta
 6. Realizar PDF con las respuestas obtenidas
 
 
