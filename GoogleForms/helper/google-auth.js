@@ -1,10 +1,10 @@
 const path = require('path');
 const {authenticate} = require('@google-cloud/local-auth');
-const {readFileSync, writeFileSync} = require('fs');
+const { readFileSync, writeFileSync } = require('fs');
 
 const SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/forms.body'];
-const TOKEN_PATH = path.join(__dirname, 'token.json');
-const CREDENTIALS_PATH = path.join(__dirname, 'credentials.json');
+const TOKEN_PATH = path.join(process.cwd(), 'token.json');
+const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json');
 
 const loadSavedCredentials = async() => {
     try {
@@ -46,5 +46,5 @@ const authorize = async() => {
 }
 
 module.exports = {
-    authorize,
+    authorize
 };

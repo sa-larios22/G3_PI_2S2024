@@ -1,5 +1,4 @@
 ### Por hacer
-1. Leer excel
 2. Pasar excel a json
 3. Actualizar form creado
 4. Forma de compartir el form
