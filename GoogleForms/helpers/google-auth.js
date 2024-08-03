@@ -1,6 +1,6 @@
+const { readFileSync, writeFileSync } = require('fs');
 const path = require('path');
 const {authenticate} = require('@google-cloud/local-auth');
-const { readFileSync, writeFileSync } = require('fs');
 
 const SCOPES = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/forms.body'];
 const TOKEN_PATH = path.join(process.cwd(), 'token.json');

@@ -1,11 +1,21 @@
 const path = require('path');
 const {google} = require('googleapis');
 const QRCode = require('qrcode')
+const pdfMake = require('pdfmake/build/pdfmake');
+const { Roboto } = require('./fonts/Roboto');
+pdfMake.fonts = {
+    Roboto: {
+        normal: Roboto.normal,
+        bold: Roboto.bold,
+        italic: Roboto.italics,
+        bolditalic: Roboto.bolditalics
+    }
+}
 
-const { readExcel } = require('./helper/read-file');
-const { authorize } = require('./helper/google-auth');
-const { inquirerMenu, pause } = require('./helper/inquirer-opt');
-const { createForm, setQuiz, addItemToQuiz, setTitle, addItemToForm, getDataFromForm } = require('./helper/google-form');
+const { readExcel } = require('./helpers/read-file');
+const { authorize } = require('./helpers/google-auth');
+const { inquirerMenu, pause } = require('./helpers/inquirer-opt');
+const { createForm, setQuiz, addItemToQuiz, setTitle, addItemToForm, getDataFromForm } = require('./helpers/google-form');
 
 const EXCEL_FORM_PATH = path.join(process.cwd(), 'ejemplo-forms.xlsx');
 const EXCEL_QUIZA_PATH = path.join(process.cwd(), 'ejemplo-quiz.xlsx');
@@ -63,6 +73,7 @@ const main = async() => {
 
             case '5':
                 questionQuizIdResponse = await addItemToQuiz(forms, quizId, quizQuestion);
+                console.log('Generando QR');
                 await QRCode.toString(quizUrl,{type:'terminal'}, function (err, url) {
                     console.log(url)
                 })
@@ -71,6 +82,7 @@ const main = async() => {
 
             case '6':
                 questionFormIdResponse = await addItemToForm(forms, formIdF, formQuestion);
+                console.log('Generando QR');
                 await QRCode.toString(formUrlF,{type:'terminal'}, function (err, url) {
                     console.log(url)
                 })
@@ -78,11 +90,80 @@ const main = async() => {
             break
 
             case '7':
-                responseQuizArray = await getDataFromForm(forms, quizId);
+                responseQuizArray = await getDataFromForm(forms, '1qJVpG2jUKex0lkfq4W43AqEjMHROAWZp50919euTm9I');
+                responseQuizArray.map((response) => {
+                    for (const [key, value] of Object.entries(response.answers)) {
+                        console.log(`Question ID: ${value.questionId}`);
+                        console.log('Answers:');
+                        console.log(value.textAnswers.answers);
+                    }
+                })
+                
             break
             
             case '8':
-                responseFormArray = await getDataFromForm(forms, formIdF);
+                responseFormArray = await getDataFromForm(forms, '1FW3Enz7_CBvRWdAVt8TTxqwEtdYkjB9yDZjHE8S7sG4');
+                var formPdf = {
+                    content: [
+                        {text: 'Reporte de respuesta del formulario', style: 'header'},
+                        'Las respuestas de este formulario fueron recopiladas de los estudiantes del curso de Practicas Intermedias',
+                        {text: 'Respuestas', style: 'subheader'},
+                        {
+                            style: 'tableExample',
+                            table: {
+                                body: [
+                                    ['Pregunta 1', 'Pregunta 2', 'Pregunta 3'],
+                                    responseFormArray.map((response) => {
+                                        let answers = [];
+                                        for (const [key, value] of Object.entries(response.answers)) {
+                                            if (value.textAnswers.answers.length > 1) {
+                                                answers.push({
+                                                    stack: [
+                                                        {
+                                                            ul: value.textAnswers.answers.map((answer) => {
+                                                                return answer.value;
+                                                            })
+                                                        }
+                                                    ]
+                                                })
+                                            } else {
+                                                answers.push(value.textAnswers.answers[0].value);
+                                            }
+                                            
+                                        }
+                                    })
+                                    
+                                ]
+                            }
+                        },
+                    ],
+                    styles: {
+                        header: {
+                            fontSize: 18,
+                            bold: true,
+                            margin: [0, 0, 0, 10]
+                        },
+                        subheader: {
+                            fontSize: 16,
+                            bold: true,
+                            margin: [0, 10, 0, 5]
+                        },
+                        tableExample: {
+                            margin: [0, 5, 0, 15]
+                        },
+                        tableHeader: {
+                            bold: true,
+                            fontSize: 13,
+                            color: 'black'
+                        }
+                    },
+                    defaultStyle: {
+                        alignment: 'justify',
+                        font: 'Roboto'
+                    }
+                }
+                
+                pdfMake.createPdf(formPdf).download();
             break
 
         }
@@ -93,13 +174,6 @@ const main = async() => {
     
 
 
-    // responseArray.map((response) => {
-    //     for (const [key, value] of Object.entries(response.answers)) {
-    //         console.log(`Question ID: ${value.questionId}`);
-    //         console.log('Answers:');
-    //         console.log(value.textAnswers.answers);
-    //     }
-    // })
 
 }
 

@@ -1,6 +1,6 @@
-const CheckQuestion = require("../models/check");
-const MultipleQuestion = require("../models/multiple");
-const SimpleTextQuestion = require("../models/text");
+const CheckQuestion = require('../models/check');
+const MultipleQuestion = require('../models/multiple');
+const SimpleTextQuestion = require('../models/text');
 
 const createForm = async(forms, title) => {
     const res = await forms.forms.create({
@@ -116,12 +116,12 @@ const addItemToQuiz = async(forms, formId, items = []) => {
         "resource": resource,
     }
 
-    await forms.forms.batchUpdate(data);
+    const res = await forms.forms.batchUpdate(data);
     const questionIdResponse = res.data.replies.map((reply) => {
-        console.log(reply.createItem.itemId);
+        return reply.createItem.itemId;
     });
-    return questionIdResponse;
     console.log('Preguntas agregadas al quiz');
+    return questionIdResponse;
 
 }
 
@@ -152,7 +152,6 @@ const addItemToForm = async(forms, formId, items = []) => {
         }
 
         if (item instanceof MultipleQuestion) {
-            console.log('MultipleQuestion');
             return {
                 createItem: {
                     item: {
@@ -185,7 +184,6 @@ const addItemToForm = async(forms, formId, items = []) => {
         }
 
         if (item instanceof CheckQuestion) {
-            console.log('CheckQuestion', item);
             return {
                 createItem: {
                     item: {
@@ -234,7 +232,7 @@ const addItemToForm = async(forms, formId, items = []) => {
 
     const res = await forms.forms.batchUpdate(data);
     const questionIdResponse = res.data.replies.map((reply) => {
-        console.log(reply.createItem.itemId);
+        return reply.createItem.itemId;
     });
     return questionIdResponse;
 }
