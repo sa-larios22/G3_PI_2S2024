@@ -1,16 +1,8 @@
 const path = require('path');
 const {google} = require('googleapis');
 const QRCode = require('qrcode')
-const pdfMake = require('pdfmake/build/pdfmake');
-const { Roboto } = require('./fonts/Roboto');
-pdfMake.fonts = {
-    Roboto: {
-        normal: Roboto.normal,
-        bold: Roboto.bold,
-        italic: Roboto.italics,
-        bolditalic: Roboto.bolditalics
-    }
-}
+
+
 
 const { readExcel } = require('./helpers/read-file');
 const { authorize } = require('./helpers/google-auth');
@@ -90,80 +82,43 @@ const main = async() => {
             break
 
             case '7':
-                responseQuizArray = await getDataFromForm(forms, '1qJVpG2jUKex0lkfq4W43AqEjMHROAWZp50919euTm9I');
+                responseQuizArray = await getDataFromForm(forms, quizId);
                 responseQuizArray.map((response) => {
+                    let i = 0;
                     for (const [key, value] of Object.entries(response.answers)) {
-                        console.log(`Question ID: ${value.questionId}`);
-                        console.log('Answers:');
-                        console.log(value.textAnswers.answers);
+                        if (i === 0) {
+                            console.log('Estudiante'.red);
+                        }
+                        console.log(`Pregunta ${i+1}: ${value.textAnswers.answers[0].value}`.cyan);
+                        if (i === 2) {
+                            i = 0;
+                        }
+                        i++;
                     }
                 })
                 
             break
             
             case '8':
-                responseFormArray = await getDataFromForm(forms, '1FW3Enz7_CBvRWdAVt8TTxqwEtdYkjB9yDZjHE8S7sG4');
-                var formPdf = {
-                    content: [
-                        {text: 'Reporte de respuesta del formulario', style: 'header'},
-                        'Las respuestas de este formulario fueron recopiladas de los estudiantes del curso de Practicas Intermedias',
-                        {text: 'Respuestas', style: 'subheader'},
-                        {
-                            style: 'tableExample',
-                            table: {
-                                body: [
-                                    ['Pregunta 1', 'Pregunta 2', 'Pregunta 3'],
-                                    responseFormArray.map((response) => {
-                                        let answers = [];
-                                        for (const [key, value] of Object.entries(response.answers)) {
-                                            if (value.textAnswers.answers.length > 1) {
-                                                answers.push({
-                                                    stack: [
-                                                        {
-                                                            ul: value.textAnswers.answers.map((answer) => {
-                                                                return answer.value;
-                                                            })
-                                                        }
-                                                    ]
-                                                })
-                                            } else {
-                                                answers.push(value.textAnswers.answers[0].value);
-                                            }
-                                            
-                                        }
-                                    })
-                                    
-                                ]
-                            }
-                        },
-                    ],
-                    styles: {
-                        header: {
-                            fontSize: 18,
-                            bold: true,
-                            margin: [0, 0, 0, 10]
-                        },
-                        subheader: {
-                            fontSize: 16,
-                            bold: true,
-                            margin: [0, 10, 0, 5]
-                        },
-                        tableExample: {
-                            margin: [0, 5, 0, 15]
-                        },
-                        tableHeader: {
-                            bold: true,
-                            fontSize: 13,
-                            color: 'black'
+                responseFormArray = await getDataFromForm(forms, formIdF);
+                responseFormArray.map((response) => {
+                    let i = 0;
+                    for (const [key, value] of Object.entries(response.answers)) {
+                        if (i === 0) {
+                            console.log('Estudiante'.blue);
                         }
-                    },
-                    defaultStyle: {
-                        alignment: 'justify',
-                        font: 'Roboto'
+                        if (value.textAnswers.answers.length > 1) {
+                            let text = `Pregunta ${i+1}: `;
+                            value.textAnswers.answers.forEach((answer, idx) => {
+                                text += (idx === (value.textAnswers.answers.length - 1)) ? `${answer.value}` : `${answer.value}, `;
+                            })
+                            console.log(text.cyan);
+                        } else {
+                            console.log(`Pregunta ${i+1}: ${value.textAnswers.answers[0].value}`.cyan);
+                        }
+                        i++
                     }
-                }
-                
-                pdfMake.createPdf(formPdf).download();
+                })
             break
 
         }
