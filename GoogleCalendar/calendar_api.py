@@ -229,7 +229,7 @@ if __name__ == "__main__":
                     print(f"Ocurrion un error al eliminar el evento: {error}")
                     continue
         elif opcion == '5':
-            calendar.create_events_from_csv('cursos.csv')
+            calendar.create_events_from_csv(os.path.join(os.path.dirname(__file__), "cursos.csv"))
             print('Eventos creados con éxito')
 
         elif opcion == '6':
