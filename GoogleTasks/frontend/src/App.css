@@ -40,3 +40,13 @@
 .read-the-docs {
   color: #888;
 }
+
+.form-control {
+  width: 100%;
+}
+
+.resizable-textarea {
+  resize: both;
+  min-height: 100px;
+  max-height: 300px;
+}
