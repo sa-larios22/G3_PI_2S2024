@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <?!= include('CSS'); ?>
+  </head>
+  <body>
+    
+    <div class="container">
+      <h2>REGISTRO</h2>
+      <br/>
+
+      <form id='formularioRegistro' name="formularioRegistro" class="needs-validation" method="post" action="<?!=pubUrl  ?>" novalidate>
+
+        <div class="mb-3">
+          <label for="nombreCompleto" class="form-label">Nombre Completo*</label>
+          <input type="text" name="nombreCompleto" id="nombreCompleto" class="form-control" placeholder="Nombre Completo" required>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="mail" class="form-label">Correo Electrónico*</label>
+            <input type="email" name="email" id="email" class="form-control" placeholder="nombre@ejemplo.com" required>
+            <div class="invalid-feedback">
+              Ingresa una dirección de correo electrónico
+            </div>
+          </div>
+          <div class="col">
+            <label for="password" class="form-label">Contraseña*</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="*******" required>
+            <div class="invalid-feedback">
+              Ingresa la contraseña
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="mb-3">
+              <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento*</label>
+              <input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control" placeholder="dd/mm/aaaa" required>
+            </div>
+          </div>
+        </div>
+
+          <div class="col">
+            <div class="mb-3">
+              <label for="pais" class="form-label">País*</label>
+              <select class="form-select" id="pais" name="pais">
+                <option value="Argentina">Argentina</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Guatemala">Guatemala</option>
+                <option value="Brasil">Brasil</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="mb-3">
+              <label for="gradoAcademico" class="form-label">País*</label>
+              <select class="form-select" id="gradoAcademico" name="gradoAcademico">
+                <option value="Primaria">Primaria</option>
+                <option value="Básicos">Básicos</option>
+                <option value="Diversificado">Diversificado</option>
+                <option value="Licenciatura">Licenciatura</option>
+                <option value="Maestría">Maestría</option>
+              </select>
+            </div>
+          </div>
+
+        <div class="mb-3">
+          <div class="form-check">
+            <label for="acuerdoPrivacidad" class="form-check-label">Estoy de acuerdo con el acuerdo de privacidad</label>
+            <input type="checkbox" class="form-check-input" name="acuerdoPrivacidad" id="acuerdoPrivacidad" checked>
+          </div>
+          
+        </div>
+        
+        <button class="btn btn-primary" type="submit">Enviar</button>
+
+      </form>
+
+    </div>
+    <?!= include('JS'); ?>
+  </body>
+</html>
