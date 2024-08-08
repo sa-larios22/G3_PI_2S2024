@@ -35,3 +35,5 @@
 4. `npm install`
 5. `npm run dev`
 
+## Misc
+`npm install react-router-dom`
