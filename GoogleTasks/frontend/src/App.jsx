@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-route
 import { gapi } from 'gapi-script';
 import './App.css';
 import CreateTask from './tasks/CreateTask';
-import ListTasks from './tasks/ListTasks';
+import TasksList from './tasks/TasksList';
 
 const CLIENT_ID = '78380164814-91vt0n8ljs8doro59nuuilabj0e0j3bq.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyCOa-nE8XB9Qvl9N2dYuHz9nInv_4RfQf8';
@@ -27,7 +27,7 @@ function App() {
         setIsSignedIn(authInstance.isSignedIn.get());
         authInstance.isSignedIn.listen(setIsSignedIn);
         if (authInstance.isSignedIn.get()) {
-          navigate('/listTasks');
+          navigate('/tasksList');
         }
       }).catch(error => {
         console.error('Error initializing Google API client:', error);
@@ -41,7 +41,7 @@ function App() {
     gapi.auth2.getAuthInstance().signIn({
       prompt: 'select_account'
     }).then(() => {
-      navigate('/listTasks');
+      navigate('/tasksList');
     });
   };
 
@@ -74,7 +74,7 @@ export default function RootApp() {
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/createTask" element={<CreateTask />} />
-        <Route path="/listTasks" element={<ListTasks />} />
+        <Route path="/tasksList" element={<TasksList />} />
       </Routes>
     </Router>
   );

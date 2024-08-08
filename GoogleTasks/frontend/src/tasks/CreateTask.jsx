@@ -86,7 +86,6 @@ function CreateTask() {
                   name="date"
                   value={task.date}
                   onChange={handleChange}
-                  required
                   className="form-control"
                 />
               </td>
@@ -99,7 +98,6 @@ function CreateTask() {
                   name="time"
                   value={task.time}
                   onChange={handleChange}
-                  required
                   className="form-control"
                 />
               </td>

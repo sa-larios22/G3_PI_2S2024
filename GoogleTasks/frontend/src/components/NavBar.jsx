@@ -12,7 +12,7 @@ function NavBar() {
           <Link to="/createTask" className="nav-link">Crear Tarea</Link>
         </li>
         <li className="nav-item">
-          <Link to="/listTasks" className="nav-link">Lista de Tareas</Link>
+          <Link to="/tasksList" className="nav-link">Lista de Tareas</Link>
         </li>
         <li className="nav-item">
           < SignOutButton />

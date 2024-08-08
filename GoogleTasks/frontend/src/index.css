@@ -78,6 +78,7 @@ button:focus-visible {
   overflow: hidden;
   width: 100%;
   padding: 10px 0;
+  border-radius: 4px;
 }
 
 .nav-list {
@@ -102,6 +103,7 @@ button:focus-visible {
 .nav-link:hover {
   background-color: #dddddd7c;
   color: black;
+  border-radius: 8px;
 }
 
 .app-container {
@@ -154,14 +156,47 @@ button:focus-visible {
   color: white;
 }
 
-.task-list-container ul {
+.task-list {
   list-style-type: none;
   padding: 0;
 }
 
-.task-list-container li {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
+.task-item {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background-color: #ffffff08;
+  color: #ececec;
+}
+
+.task-item.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.task-header h3 {
+  margin: 0;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre los botones */
+}
+
+.task-due {
+  font-style: italic;
+  color: #c2c2c2;
 }
 
 .task-list-container li h3 {
@@ -178,4 +213,66 @@ button:focus-visible {
   margin: 5px 0;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+/* Estilo para el contenedor del checkbox */
+.task-checkbox {
+  appearance: none;
+  width: 30px;
+  height: 30px;
+  background-color: #f0f0f0;
+  border: 3px solid #4896f4;
+  border-radius: 45px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Estilo cuando el checkbox está marcado */
+.task-checkbox:checked {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+/* Estilo para el checkmark */
+.task-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 7px;
+  width: 9px;
+  height: 18px;
+  border: solid white;
+  border-width: 0 4px 4px 0;
+  transform: rotate(45deg);
+  border-radius: 3px;
+}
+
+/* Estilo para el checkbox en hover */
+.task-checkbox:hover {
+  border-color: #888;
+}
+
+/* Estilo para el checkbox en focus */
+.task-checkbox:focus {
+  outline: none;
+  box-shadow: 0 0 3px 2px rgba(0, 123, 255, 0.25);
+}
+
+.btn-delete {
+  background-color: #ea4335;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-delete:hover {
+  background-color: #d32f2f;
+}
+
+.btn-delete:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(234, 67, 53, 0.5);
 }
