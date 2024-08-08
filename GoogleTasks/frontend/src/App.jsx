@@ -53,6 +53,8 @@ function App() {
 
   return (
     <div className="app-container">
+      <h1>Google Tasks API</h1>
+      <h2>Sergio Larios</h2>
       {isSignedIn ? (
         <button className="btn btn-signout" onClick={handleSignOut}>
           Cerrar Sesión

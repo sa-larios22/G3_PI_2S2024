@@ -1,7 +1,7 @@
 // src/tasks/CreateTask.jsx
 import React, { useState } from 'react';
 import { gapi } from 'gapi-script';
-import { useNavigate } from 'react-router-dom';
+import NavBar from '../components/NavBar';
 
 function CreateTask() {
   const [task, setTask] = useState({
@@ -10,8 +10,6 @@ function CreateTask() {
     date: '',
     time: ''
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,22 +34,16 @@ function CreateTask() {
     }).then(response => {
       console.log('Task created:', response.result);
       setTask({ title: '', details: '', date: '', time: '' });
+      alert('Tarea creada exitosamente');
     }).catch(error => {
       console.error('Error creating task:', error);
-    });
-  };
-
-  const handleSignOut = () => {
-    gapi.auth2.getAuthInstance().signOut().then(() => {
-      navigate('/');
+      alert('Error al crear tarea: ' + error.result.error.message);
     });
   };
 
   return (
     <div className="form-container">
-      <button className="btn btn-signout" onClick={handleSignOut}>
-        Cerrar Sesión
-      </button>
+      < NavBar />
       <form onSubmit={handleSubmit}>
         <table className="form-table">
           <thead>
@@ -82,6 +74,7 @@ function CreateTask() {
                   onChange={handleChange}
                   required
                   className="form-control"
+                  style = {{resize: 'vertical'}}
                 />
               </td>
             </tr>

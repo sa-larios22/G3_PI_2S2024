@@ -18,6 +18,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -25,6 +26,7 @@ a:hover {
 body {
   margin: 0;
   display: flex;
+  flex-direction: column;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -46,9 +48,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -59,10 +63,119 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
+}
+
+.navbar {
+  background-color: #333;
+  overflow: hidden;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.nav-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-item {
+  margin: 0 15px;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 14px 20px;
+  display: block;
+}
+
+.nav-link:hover {
+  background-color: #dddddd7c;
+  color: black;
+}
+
+.app-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.form-container, .task-list-container {
+  margin: 20px auto;
+  width: 100%;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-table {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.form-control {
+  width: 95%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-signin {
+  background-color: #4285f4;
+  color: white;
+}
+
+.btn-signout {
+  background-color: #ea4335;
+  color: white;
+}
+
+.btn-submit {
+  background-color: #34a853;
+  color: white;
+}
+
+.task-list-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.task-list-container li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.task-list-container li h3 {
+  margin: 0;
+}
+
+.task-list-container li p {
+  margin: 5px 0;
+}
+
+.textarea {
+  width: 95%;
+  padding: 100px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
