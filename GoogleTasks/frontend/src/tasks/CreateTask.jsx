@@ -7,8 +7,7 @@ function CreateTask() {
   const [task, setTask] = useState({
     title: '',
     details: '',
-    date: '',
-    time: ''
+    date: ''
   });
 
   const handleChange = (e) => {
@@ -21,8 +20,8 @@ function CreateTask() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { title, details, date, time } = task;
-    const dueDate = new Date(`${date}T${time}:00Z`);
+    const { title, details, date } = task;
+    const dueDate = new Date(date);
 
     gapi.client.tasks.tasks.insert({
       tasklist: '@default',
@@ -33,7 +32,7 @@ function CreateTask() {
       }
     }).then(response => {
       console.log('Task created:', response.result);
-      setTask({ title: '', details: '', date: '', time: '' });
+      setTask({ title: '', details: '', date: ''});
       alert('Tarea creada exitosamente');
     }).catch(error => {
       console.error('Error creating task:', error);
@@ -85,18 +84,6 @@ function CreateTask() {
                   type="date"
                   name="date"
                   value={task.date}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td><label>Hora:</label></td>
-              <td>
-                <input
-                  type="time"
-                  name="time"
-                  value={task.time}
                   onChange={handleChange}
                   className="form-control"
                 />

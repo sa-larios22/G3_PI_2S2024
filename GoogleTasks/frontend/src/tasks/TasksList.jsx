@@ -17,6 +17,10 @@ function TasksList() {
     };
 
     fetchTasks();
+
+    const intervalID = setInterval(fetchTasks, 10000);
+
+    return () => clearInterval(intervalID);
   }, []);
 
   const toggleComplete = (taskId, currentStatus) => {
@@ -51,7 +55,7 @@ function TasksList() {
       gapi.client.tasks.tasks.delete({
         tasklist: '@default',
         task: taskId
-      }).then(response => {
+      }).then(() => {
         setTasks(prevTasks => prevTasks.filter(t => t.id !== taskId));
         alert('Tarea eliminada');
       }).catch(error => {
@@ -61,37 +65,79 @@ function TasksList() {
     }
   };
 
+  const pendingTasks = tasks.filter(task => task.status !== 'completed');
+  const completedTasks = tasks.filter(task => task.status === 'completed');
+
   return (
     <div className="task-list-container">
       <NavBar />
       <h2>Lista de Tareas</h2>
-      {tasks.length === 0 ? (
-        <p>No hay tareas.</p>
-      ) : (
-        <ul className="task-list">
-          {tasks.map(task => (
-            <li key={task.id} className={`task-item ${task.status === 'completed' ? 'completed' : ''}`}>
-              <div className="task-header">
-                <h3>{task.title}</h3>
-                <input
-                  type="checkbox"
-                  class="task-checkbox"
-                  checked={task.status === 'completed'}
-                  onChange={() => toggleComplete(task.id, task.status)}
-                />
-                <button
-                  className = "btn btn-delete"
-                  onClick={() => deleteTask(task.id)}
-                  >
-                    🗑️
-                  </button>
-              </div>
-              <p>{task.notes}</p>
-              <p className="task-due">{task.due ? `Fecha de vencimiento: ${new Date(task.due).toLocaleString()}` : 'Sin fecha de vencimiento'}</p>
-            </li>
-          ))}
-        </ul>
-      )}
+
+      <div className="tasks-section">
+        <h3>Tareas Pendientes</h3>
+        {pendingTasks.length === 0 ? (
+          <p>No hay tareas pendientes.</p>
+        ) : (
+          <ul className="task-list">
+            {pendingTasks.map(task => (
+              <li key={task.id} className="task-item">
+                <div className="task-header">
+                  <h4>{task.title}</h4>
+                  <div className="task-actions">
+                    <input
+                      type="checkbox"
+                      className="task-checkbox"
+                      checked={task.status === 'completed'}
+                      onChange={() => toggleComplete(task.id, task.status)}
+                    />
+                    <button
+                      className="btn btn-delete"
+                      onClick={() => deleteTask(task.id)}
+                    >
+                      🗑️
+                    </button>
+                  </div>
+                </div>
+                <p>{task.notes}</p>
+                <p className="task-due">{task.due ? `Fecha de vencimiento: ${new Date(task.due).toLocaleString()}` : 'Sin fecha de vencimiento'}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div className="tasks-section">
+        <h3>Tareas Completadas</h3>
+        {completedTasks.length === 0 ? (
+          <p>No hay tareas completadas.</p>
+        ) : (
+          <ul className="task-list">
+            {completedTasks.map(task => (
+              <li key={task.id} className="task-item completed">
+                <div className="task-header">
+                  <h4>{task.title}</h4>
+                  <div className="task-actions">
+                    <input
+                      type="checkbox"
+                      className="task-checkbox"
+                      checked={task.status === 'completed'}
+                      onChange={() => toggleComplete(task.id, task.status)}
+                    />
+                    <button
+                      className="btn btn-delete"
+                      onClick={() => deleteTask(task.id)}
+                    >
+                      🗑️
+                    </button>
+                  </div>
+                </div>
+                <p>{task.notes}</p>
+                <p className="task-due">{task.due ? `Fecha de vencimiento: ${new Date(task.due).toLocaleString()}` : 'Sin fecha de vencimiento'}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
